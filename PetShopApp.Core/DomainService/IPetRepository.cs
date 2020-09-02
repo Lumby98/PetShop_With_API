@@ -13,5 +13,7 @@ namespace PetShopApp.Core.DomainService
 
         public bool RemovePet(int id);
 
+        public Pet UpdatePet(int id, Pet pet);
+
     }
 }

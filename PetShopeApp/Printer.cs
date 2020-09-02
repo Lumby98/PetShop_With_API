@@ -12,14 +12,14 @@ namespace PetShopApp.UI
     public class Printer
     {
         IPetService _PetService;
-        readonly String[] MenuItems = {
+        readonly string[] _menuItems = {
                 "List of pets",
                 "Search",
                 "Create pet",
                 "Delete pet",
                 "Update pet",
                 "Sort pets by price",
-                "show 5 cheapest perst",
+                "show 5 cheapest pets",
                 "Exit"
             };
 
@@ -31,9 +31,9 @@ namespace PetShopApp.UI
         {
             Console.WriteLine("Select what you want to do:\n");
 
-            for (int i = 0; i < MenuItems.Length; i++)
+            for (int i = 0; i < _menuItems.Length; i++)
             {
-                Console.WriteLine($"{i + 1}: {MenuItems[i]}");
+                Console.WriteLine($"{i + 1}: {_menuItems[i]}");
             }
 
             int selection;
@@ -202,12 +202,14 @@ namespace PetShopApp.UI
         {
             ListAllPets();
             Console.WriteLine("chose a pet by id");
-            int s;
-            while (!int.TryParse(Console.ReadLine(), out s) || _PetService.GetPets().Find(pet => pet.PetId.Equals(s)).Equals(null))
+            int id;
+            while (!int.TryParse(Console.ReadLine(), out id) || _PetService.GetPets().Find(pet => pet.PetId.Equals(id)).Equals(null))
             {
                 Console.WriteLine("please select a actual Id");
             }
-            Pet newPet = _PetService.GetPets().Find(Pet => Pet.PetId.Equals(s));
+
+
+            Pet newPet = new Pet();
 
 
             //pet name
@@ -224,28 +226,25 @@ namespace PetShopApp.UI
             Console.WriteLine("4: not changed");
 
             int select;
-            while ((!int.TryParse(Console.ReadLine(), out select) || select < 1 || select > 4))
+            while ((!int.TryParse(Console.ReadLine(), out select) || select < 1 || select > 3))
             {
-                Console.WriteLine("please select a number between 1-4");
+                Console.WriteLine("please select a number between 1-3");
             }
 
             string petType;
-            if (s.Equals(1))
+            if (select.Equals(1))
             {
                 petType = "Dog";
             }
-            else if (s.Equals(2))
+            else if (select.Equals(2))
             {
                 petType = "cat";
             }
-            else if(s.Equals(3))
+            else
             {
                 petType = "goat";
             }
-            else
-            {
-                petType = newPet.PetType;
-            }
+            
 
             //birthdate
             Console.WriteLine("--------------------------");
@@ -289,34 +288,16 @@ namespace PetShopApp.UI
             }
 
             //editing
-            if (!newPet.Name.Equals(name) && !name.Equals(""))
-            {
+            
                 newPet.Name = name;
-            }
-            if (!newPet.PetType.Equals(petType))
-            {
                 newPet.PetType = petType;
-            }
-            if (!newPet.BirthDate.Equals(birthDate) && !birthDate.Equals(null))
-            {
                 newPet.BirthDate = birthDate;
-            }
-            if (!newPet.SoldDate.Equals(sold) && !sold.Equals(null))
-            {
                 newPet.SoldDate = sold;
-            }
-            if (!newPet.Colour.Equals(colour) && !colour.Equals(""))
-            {
                 newPet.Colour = colour;
-            }
-            if (!newPet.PreviousOwner.Equals(owner) && !owner.Equals(""))
-            {
                 newPet.PreviousOwner = owner;
-            }
-            if (!newPet.Price.Equals(price) && !price.Equals(0))
-            {
                 newPet.Price = price;
-            }
+                _PetService.updatePet(id, newPet);
+            
             Console.WriteLine("--------------------------");
             Console.WriteLine($"pet with id: {newPet.PetId} was updated");
             Console.WriteLine(newPet.ToString());
