@@ -27,6 +27,11 @@ namespace PetShopApp.Core.ApplicationService.Impl
             return _petRepository.RemovePet(id);
         }
 
+        public Pet GetPet(int id)
+        {
+            return _petRepository.FindPet(id);
+        }
+
         public Pet UpdatePet(int id, Pet pet)
         {
             if(!_petRepository.ReadPets().Exists(pet => pet.PetId == id))

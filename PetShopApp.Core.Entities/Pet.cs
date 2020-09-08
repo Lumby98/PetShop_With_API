@@ -12,14 +12,15 @@ namespace PetShopApp.Core.Entities
         public DateTime BirthDate { get; set; }
         public DateTime SoldDate { get; set; }
         public string Colour { get; set; }
-        public string PreviousOwner { get; set; }
+        public Owner PreviousOwner { get; set; }
         public double Price { get; set; }
 
         public override string ToString()
         {
             return $"Id: {PetId} Name: {Name} Type: {PetType}" +
                     $" Birthdate: {BirthDate} Sold: {SoldDate} Colour: {Colour}" +
-                    $" Last owner: {PreviousOwner} Price: {Price}";
+                    $" Last owner: {PreviousOwner.FirstName} {PreviousOwner.LastName}" +
+                    $" Price: {Price}";
         }
         
     }

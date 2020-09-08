@@ -30,7 +30,7 @@ namespace PetShopApp.Infrastructure.Data
 
         public Pet UpdatePet(int id, Pet pet)
         {
-            Pet petToEdit = FakeDB.pets.Find(pet => pet.PetId == id);
+            Pet petToEdit = FakeDB.pets.Find(p => p.PetId == id);
             petToEdit.Name = pet.Name;
             petToEdit.PetType = pet.PetType;
             petToEdit.BirthDate = pet.BirthDate;
@@ -40,6 +40,12 @@ namespace PetShopApp.Infrastructure.Data
             petToEdit.Price = pet.Price;
 
             return petToEdit;
+        }
+
+        public Pet FindPet(int id)
+        {
+            Pet returnPet = FakeDB.pets.Find(p => p.PetId.Equals(id));
+            return returnPet;
         }
     }
 }

@@ -15,5 +15,7 @@ namespace PetShopApp.Core.DomainService
 
         public Pet UpdatePet(int id, Pet pet);
 
+        public Pet FindPet(int id);
+
     }
 }

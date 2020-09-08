@@ -38,9 +38,9 @@ namespace PetShopApp.RestAPI.Controllers
 
         // GET api/<PetsController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public ActionResult<Pet> Get(int id)
         {
-            return "value";
+            return Ok(_petService.GetPet(id));
         }
 
         // POST api/<PetsController>
