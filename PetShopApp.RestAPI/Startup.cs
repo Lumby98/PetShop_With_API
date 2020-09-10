@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using PetShopApp.Core.ApplicationService;
 using PetShopApp.Core.ApplicationService.Impl;
 using PetShopApp.Core.DomainService;
@@ -35,7 +36,11 @@ namespace PetShopApp.RestAPI
             services.AddScoped<IOwnerRepository, OwnerRepository>();
             services.AddScoped<IOwnerService, OwnerService>();
 
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(o =>
+            {
+                o.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                o.SerializerSettings.MaxDepth = 5;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,7 +53,7 @@ namespace PetShopApp.RestAPI
                 using (var scope = app.ApplicationServices.CreateScope())
                 {
                     var repo = scope.ServiceProvider.GetService<IPetRepository>();
-                    FakeDB.InitData();
+                    FakeDb.InitData();
                 }
             }
 

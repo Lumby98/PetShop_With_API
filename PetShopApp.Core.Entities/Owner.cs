@@ -12,5 +12,6 @@ namespace PetShopApp.Core.Entities
         public string LastName { get; set; }
         public string Address { get; set; }
         public DateTime BirthDate { get; set; }
+        public List<Pet> pets { get; set; }
     }
 }

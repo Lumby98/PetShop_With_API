@@ -10,27 +10,27 @@ namespace PetShopApp.Infrastructure.Data
     {
         public Pet AddPet(Pet pet)
         {
-            return FakeDB.AddPet(pet);
+            return FakeDb.AddPet(pet);
         }
 
         public void InitData()
         {
-            FakeDB.InitData();
+            FakeDb.InitData();
         }
 
         public List<Pet> ReadPets()
         {
-            return FakeDB.pets;
+            return FakeDb.Pets;
         }
 
         public bool RemovePet(int id)
         {
-            return FakeDB.RemovePet(id);
+            return FakeDb.RemovePet(id);
         }
 
         public Pet UpdatePet(int id, Pet pet)
         {
-            Pet petToEdit = FakeDB.pets.Find(p => p.PetId == id);
+            Pet petToEdit = FakeDb.Pets.Find(p => p.PetId == id);
             petToEdit.Name = pet.Name;
             petToEdit.PetType = pet.PetType;
             petToEdit.BirthDate = pet.BirthDate;
@@ -44,7 +44,7 @@ namespace PetShopApp.Infrastructure.Data
 
         public Pet FindPet(int id)
         {
-            Pet returnPet = FakeDB.pets.Find(p => p.PetId.Equals(id));
+            Pet returnPet = FakeDb.Pets.Find(p => p.PetId.Equals(id));
             return returnPet;
         }
     }

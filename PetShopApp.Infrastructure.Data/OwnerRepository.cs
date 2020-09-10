@@ -10,28 +10,30 @@ namespace PetShopApp.Infrastructure.Data
     {
         public List<Owner> ReadOwners()
         {
-            return FakeDB.Owners;
+            var returnOwners = new List<Owner>(FakeDb.Owners);
+            
+            return returnOwners;
         }
 
         public Owner CreateOwner(Owner owner)
         {
-            return FakeDB.AddOwner(owner);
+            return FakeDb.AddOwner(owner);
         }
 
         public bool DeleteOwner(int id)
         {
-            return FakeDB.RemoveOwner(id);
+            return FakeDb.RemoveOwner(id);
         }
 
         public Owner getOwner(int id)
         {
-            Owner returnOwner = FakeDB.Owners.Find(o => o.Id.Equals(id));
+            Owner returnOwner = FakeDb.Owners.Find(o => o.Id.Equals(id));
             return returnOwner;
         }
 
         public Owner UpdateOwner(int id, Owner owner)
         {
-            Owner ownerToEdit = FakeDB.Owners.Find(o => o.Id.Equals(id));
+            Owner ownerToEdit = FakeDb.Owners.Find(o => o.Id.Equals(id));
             ownerToEdit.FirstName = owner.FirstName;
             ownerToEdit.LastName = owner.LastName;
             ownerToEdit.BirthDate = owner.BirthDate;

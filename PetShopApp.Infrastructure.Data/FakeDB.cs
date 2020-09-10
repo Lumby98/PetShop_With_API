@@ -6,9 +6,9 @@ using System.Text;
 
 namespace PetShopApp.Infrastructure.Data
 {
-    public static class FakeDB
+    public static class FakeDb
     {
-        public static List<Pet> pets;
+        public static List<Pet> Pets;
         public static List<Owner> Owners;
         public static int PetId = 1;
         public static int OwnerId = 1;
@@ -33,7 +33,7 @@ namespace PetShopApp.Infrastructure.Data
               }
               };
           
-           pets = new List<Pet>{new Pet
+           Pets = new List<Pet>{new Pet
                 {
                     PetId = PetId++,
                     Name = "Spark",
@@ -87,13 +87,18 @@ namespace PetShopApp.Infrastructure.Data
                 Price = 1000000000000000000000000000.00
             }
            };
-          
+           foreach (var owner in Owners)
+           {
+               owner.pets = new List<Pet>(Pets.FindAll(p =>
+                   p.PreviousOwner.Id.Equals(owner.Id)));
+           }
+
         }
 
       public static Pet AddPet(Pet pet)
         {
             pet.PetId = PetId++;
-            pets.Add(pet);
+            Pets.Add(pet);
             return pet;
         }
 
@@ -105,9 +110,9 @@ namespace PetShopApp.Infrastructure.Data
       }
       public static bool RemovePet(int id)
         {
-            if (pets.Find(x => x.PetId == id) != null)
+            if (Pets.Find(x => x.PetId == id) != null)
             {
-               pets.Remove(pets.Find(x => x.PetId == id));
+               Pets.Remove(Pets.Find(x => x.PetId == id));
                 return true;
 
             }
