@@ -8,7 +8,7 @@ namespace PetShopApp.Core.Entities
     {
         public int PetId { get; set; }
         public string Name { get; set; }
-        public string PetType { get; set; }
+        public PetType PetType { get; set; }
         public DateTime BirthDate { get; set; }
         public DateTime SoldDate { get; set; }
         public string Colour { get; set; }
@@ -17,7 +17,7 @@ namespace PetShopApp.Core.Entities
 
         public override string ToString()
         {
-            return $"Id: {PetId} Name: {Name} Type: {PetType}" +
+            return $"Id: {PetId} Name: {Name} Type: {PetType.PetTypeId}" +
                     $" Birthdate: {BirthDate} Sold: {SoldDate} Colour: {Colour}" +
                     $" Last owner: {PreviousOwner.FirstName} {PreviousOwner.LastName}" +
                     $" Price: {Price}";

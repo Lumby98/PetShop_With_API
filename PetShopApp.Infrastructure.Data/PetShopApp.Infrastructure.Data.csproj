@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PetShopApp.Core.Entities\PetShopApp.Core.Entities.csproj" />
+    <ProjectReference Include="..\PetShopApp.Core.Filter\PetShopApp.Core.Filter.csproj" />
     <ProjectReference Include="..\PetShopApp.Core\PetShopApp.Core.csproj" />
   </ItemGroup>
 

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PetShopApp.Core.ApplicationService;
 using PetShopApp.Core.Entities;
+using PetShopApp.Core.Filter;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -21,7 +22,7 @@ namespace PetShopApp.RestAPI.Controllers
         }
         // GET: api/<OwnerController>
         [HttpGet]
-        public ActionResult<Owner> Get()
+        public ActionResult<Owner> Get([FromQuery] Filter filter)
         {
             try
             {

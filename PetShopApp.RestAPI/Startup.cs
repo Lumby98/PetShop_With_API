@@ -32,9 +32,12 @@ namespace PetShopApp.RestAPI
         {
             services.AddScoped<IPetRepository, PetRepository>();
             services.AddScoped<IPetService, PetService>();
-            
+
             services.AddScoped<IOwnerRepository, OwnerRepository>();
             services.AddScoped<IOwnerService, OwnerService>();
+
+            services.AddScoped<IPetTypeService, PetTypeService>();
+            services.AddScoped<IPetTypeRepository, PetTypeRepository>();
 
             services.AddControllers().AddNewtonsoftJson(o =>
             {

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using PetShopApp.Core.ApplicationService;
 using PetShopApp.Core.ApplicationService.Impl;
 using PetShopApp.Core.Entities;
+using PetShopApp.Core.Filter;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -23,15 +24,15 @@ namespace PetShopApp.RestAPI.Controllers
         }
         // GET: api/<PetsController>
         [HttpGet]
-        public ActionResult<Pet> Get()
+        public ActionResult<Pet> Get([FromQuery] Filter filter)
         {
             try
             {
-                return Ok(_petService.GetPets());
+                return Ok(_petService.GetPets(filter));
             }
             catch (Exception e)
             {
-                return StatusCode(500, e.Message);
+                return StatusCode(500, "could not get pets");
             }
         }
        
@@ -53,7 +54,7 @@ namespace PetShopApp.RestAPI.Controllers
             }
             catch (Exception e)
             {
-                return StatusCode(406, e.Message);
+                return StatusCode(500, e.Message);
             }
         }
 
@@ -63,7 +64,7 @@ namespace PetShopApp.RestAPI.Controllers
         {
             try
             {
-                return Ok(_petService.UpdatePet(id, pet));
+                return StatusCode(202, _petService.UpdatePet(id, pet));
             }
             catch (Exception e)
             {

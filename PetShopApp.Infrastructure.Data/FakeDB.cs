@@ -10,8 +10,10 @@ namespace PetShopApp.Infrastructure.Data
     {
         public static List<Pet> Pets;
         public static List<Owner> Owners;
+        public static List<PetType> PetTypes;
         public static int PetId = 1;
         public static int OwnerId = 1;
+        public static int PetTypeId = 1;
 
       public static void InitData()
       {
@@ -32,12 +34,30 @@ namespace PetShopApp.Infrastructure.Data
                   BirthDate = DateTime.Now.Date.AddYears(-20)
               }
               };
+
+          PetTypes = new List<PetType>{new PetType()
+              {
+                  PetTypeId = PetTypeId++,
+                  PetTypeName = "dog"
+              }, 
+              new PetType()
+              {
+                  PetTypeId = PetTypeId++,
+                  PetTypeName = "cat"
+              },
+              new PetType()
+              {
+                  PetTypeId = PetTypeId++,
+                  PetTypeName = "goat"
+              }
+
+          };
           
            Pets = new List<Pet>{new Pet
                 {
                     PetId = PetId++,
                     Name = "Spark",
-                    PetType = "Dog",
+                    PetType = PetTypes.Find(t => t.PetTypeId.Equals(1)),
                     BirthDate = DateTime.Now.AddYears(-5),
                     SoldDate = DateTime.Now.AddMonths(-1),
                     Colour = "Brown",
@@ -48,7 +68,7 @@ namespace PetShopApp.Infrastructure.Data
                 {
                     PetId = PetId++,
                     Name = "Lilly",
-                    PetType = "Cat",
+                    PetType = PetTypes.Find(t => t.PetTypeId.Equals(2)),
                     BirthDate = DateTime.Now.AddYears(-7),
                     SoldDate = DateTime.Now,
                     Colour = "Grey",
@@ -59,7 +79,7 @@ namespace PetShopApp.Infrastructure.Data
                 {
                     PetId = PetId++,
                     Name = "Lucifer",
-                    PetType = "Goat",
+                    PetType = PetTypes.Find(t => t.PetTypeId.Equals(3)),
                     BirthDate = DateTime.Now.AddYears(-666),
                     SoldDate = DateTime.Now.AddYears(-69),
                     Colour = "Black",
@@ -69,7 +89,7 @@ namespace PetShopApp.Infrastructure.Data
             {
                 PetId = PetId++,
                 Name = "Dog",
-                PetType = "Cat",
+                PetType = PetTypes.Find(t => t.PetTypeId.Equals(2)),
                 BirthDate = DateTime.Now.AddYears(-666),
                 SoldDate = DateTime.Now.AddYears(-100),
                 Colour = "White",
@@ -79,7 +99,7 @@ namespace PetShopApp.Infrastructure.Data
             {
                 PetId = PetId++,
                 Name = "allah",
-                PetType = "Goat",
+                PetType = PetTypes.Find(t => t.PetTypeId.Equals(3)),
                 BirthDate = DateTime.Now.AddYears(-1000),
                 SoldDate = DateTime.Now.AddYears(-5),
                 Colour = "white",
@@ -93,6 +113,11 @@ namespace PetShopApp.Infrastructure.Data
                    p.PreviousOwner.Id.Equals(owner.Id)));
            }
 
+           foreach (var petType in PetTypes)
+           {
+               petType.Pets = new List<Pet>(Pets.FindAll(p =>
+                   p.PetType.PetTypeId.Equals(petType.PetTypeId)));
+           }
         }
 
       public static Pet AddPet(Pet pet)
@@ -101,13 +126,19 @@ namespace PetShopApp.Infrastructure.Data
             Pets.Add(pet);
             return pet;
         }
-
       public static Owner AddOwner(Owner owner)
       {
           owner.Id = OwnerId++;
           Owners.Add(owner);
           return owner;
       }
+      public static PetType AddPetType(PetType type)
+      {
+          type.PetTypeId = PetTypeId++;
+          PetTypes.Add(type);
+          return type;
+      }
+
       public static bool RemovePet(int id)
         {
             if (Pets.Find(x => x.PetId == id) != null)
@@ -121,7 +152,6 @@ namespace PetShopApp.Infrastructure.Data
                 return false;
             }
         }
-
       public static bool RemoveOwner(int id)
       {
           if (Owners.Find(x => x.Id == id) != null)
@@ -129,6 +159,25 @@ namespace PetShopApp.Infrastructure.Data
               Owners.Remove(Owners.Find(x => x.Id == id));
               return true;
 
+          }
+          else
+          {
+              return false;
+          }
+      }
+      public static bool RemovePetType(int id)
+      {
+          PetType petTypeDelete = PetTypes.Find(x => x.PetTypeId == id);
+
+          if (petTypeDelete != null)
+          {
+              foreach (var pet in petTypeDelete.Pets)
+              {
+                  RemovePet(pet.PetId);
+              }
+              PetTypes.Remove(petTypeDelete);
+             
+              return true;
           }
           else
           {
