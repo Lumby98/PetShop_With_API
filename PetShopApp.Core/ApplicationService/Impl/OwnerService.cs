@@ -22,6 +22,11 @@ namespace PetShopApp.Core.ApplicationService.Impl
             return _ownerRepository.ReadOwners();
         }
 
+        public List<Owner> GetOwners(Filter.Filter filter)
+        {
+            return _ownerRepository.ReadOwners(filter);
+        }
+
         public Owner CreateOwner(Owner owner)
         {
             Owner ownerAdd;
