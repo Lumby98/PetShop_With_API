@@ -41,7 +41,15 @@ namespace PetShopApp.RestAPI.Controllers
         [HttpGet("{id}")]
         public ActionResult<Pet> Get(int id)
         {
-            return Ok(_petService.GetPet(id));
+            try
+            {
+                return Ok(_petService.GetPet(id));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+            
         }
 
         // POST api/<PetsController>
